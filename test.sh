@@ -44,6 +44,7 @@ fi
 
 echo -e "\n~~ File Handing~~"
 
+#Testing bad filename
 echo -n "Testing bad filename - "
 ./maze fake.txt > tmp
 if grep -q "Error: Bad filename" tmp;
@@ -53,3 +54,22 @@ else
     echo "FAIL"
 fi
 
+#Testing bad permissions
+echo -n "Testing bad permissions - "
+timeout 0.2s ./maze data/bad_perms.txt 10 20 > tmp
+if grep -q "Error: Bad filename" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+#Testing maze shape
+echo -n "Testing maze shape - "
+timeout 0.2s ./maze data/bad_shape.txt 20 30 > tmp
+if grep -q "Error: The maze should be a rectangle";
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
